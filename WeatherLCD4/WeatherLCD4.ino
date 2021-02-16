@@ -2,10 +2,8 @@
 #include <ArduinoJson.h>
 #include <HTTPClient.h>
 
-#define ssid  "Your SSID"
-#define pswd  "Your Password"
+#include "config.h"
 
-//#define TESTDATA
 #define WDCNT     48
 
 #if defined(TESTDATA)
@@ -32,19 +30,11 @@ int16_t wdhour[WDCNT], wdtemp[WDCNT], wdpopr[WDCNT];
 #define OWURL   "http://api.openweathermap.org/data/2.5/onecall"
 #define OPTION  "&lang=en&units=metric&exclude=current,minutely,daily,alerts"
 
-/*
- * https://openweathermap.org/api
- * Subscribe => "One Call API"
- */
+/*  APPID define in "config.h"
 #define APPID   "Your APPID from openWeather"
-#define openWeather OWURL "?lat=" LAT "&lon=" LAN OPTION "&APPID=" APPID
-
-/*
-http://api.openweathermap.org/data/2.5/onecall
-?lat=35.535693&lon=139.726133
-&lang=en&units=metric&exclude=current,minutely,daily,alerts
-&APPID=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 */
+
+#define openWeather OWURL "?lat=" LAT "&lon=" LAN OPTION "&APPID=" APPID
 
 #include <SPI.h>
 #include <TFT_eSPI.h>
@@ -79,8 +69,8 @@ void setup() {
   tft.fillScreen(TFT_BLACK);
   tft.setTextColor(TFT_WHITE, TFT_BLACK);
 
-  WiFi.begin(ssid, pswd);
-  Serial.println("Connected to the WiFi network - " ssid);
+  WiFi.begin(SSID, PSWD);
+  Serial.println("Connected to the WiFi network - " SSID);
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
     Serial.print(".");
